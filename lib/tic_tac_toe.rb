@@ -11,6 +11,7 @@ class Board
     @@board_range.each do |key|
       @@squares[key] = @@board_slot_sign
     end
+    @@squares
   end
   make_board
 
@@ -32,12 +33,12 @@ class Player
   end
 
   def pick_slot
+    board = Board.squares.select { |_key, value| value == '-' }
+    arr1 = []
+    board.each { |k, _v| arr1 << k }
+    display_guide
+    choose(@name, arr1)
     loop do
-      board = Board.squares.select { |_key, value| value == '-' }
-      arr1 = []
-      board.each { |k, _v| arr1 << k }
-      display_guide
-      choose(@name, arr1)
       @slot = input
       break if board[@slot] == '-'
 
@@ -50,8 +51,6 @@ end
 class Game
   def play(board_slot, character)
     Board.squares[board_slot] = character
-    display_guide
-    display_slots
   end
 
   def checkmatch(char)

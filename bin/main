@@ -185,6 +185,8 @@ def run_game(player1, player2)
   run = proc do |instance, symbol, name, current_player|
     slot1 = current_player.pick_slot
     instance.play(slot1, symbol)
+    display_guide
+    display_slots
     win = instance.checkmatch(symbol)
     display_score.call
     @val += 1
